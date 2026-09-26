@@ -175,7 +175,7 @@ fun GameHeader(day:Int,money:Int,power:Int,water:Int,food:Int,level:Int){
 @Composable
 fun ColumnScope.Community(rooms:List<Room>,build:(Int)->Unit,rent:(Int)->Unit,msg:String){
     Text("社区地图",Modifier.padding(start=16.dp,top=12.dp,end=16.dp),fontSize=20.sp,fontWeight=FontWeight.Bold,color=Dark)
-    Text("修复废墟、招募租客，让 A-17 重新活起来。",Modifier.padding(horizontal=16.dp,top=2.dp,bottom=8.dp),fontSize=12.sp,color=Color(0xFF75695F))
+    Text("修复废墟、招募租客，让 A-17 重新活起来。",Modifier.padding(start=16.dp,end=16.dp,top=2.dp,bottom=8.dp),fontSize=12.sp,color=Color(0xFF75695F))
     Surface(Modifier.padding(horizontal=12.dp).fillMaxWidth().height(76.dp),shape=RoundedCornerShape(18.dp),color=Color(0xFFE1D0B7)){
         Row(Modifier.padding(12.dp),verticalAlignment=Alignment.CenterVertically){
             Box(Modifier.size(48.dp).clip(CircleShape).background(Color(0xFF8B6B4B)),contentAlignment=Alignment.Center){Icon(Icons.Default.Campaign,null,tint=Color.White)}
