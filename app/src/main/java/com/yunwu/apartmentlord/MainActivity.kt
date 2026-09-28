@@ -53,7 +53,30 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Game() {
     val context = LocalContext.current
-    val prefs = remember { context.getSharedPreferences("apartment_lord_v13", Context.MODE_PRIVATE) }
+    val prefs = remember {
+        val newPrefs = context.getSharedPreferences("apartment_lord_v13", Context.MODE_PRIVATE)
+        if (!newPrefs.getBoolean("_migrated_v12", false)) {
+            val oldPrefs = context.getSharedPreferences("apartment_lord_v12", Context.MODE_PRIVATE)
+            val edit = newPrefs.edit()
+            // Preserve the important V1.2 progress when upgrading to V1.3.
+            listOf("day", "money", "power", "water", "food", "level").forEach { key ->
+                if (oldPrefs.contains(key)) edit.putInt(key, oldPrefs.getInt(key, 0))
+            }
+            for (id in 1..9) {
+                if (oldPrefs.contains("room$id")) edit.putBoolean("room_$id", oldPrefs.getBoolean("room$id", false))
+                val tenant = oldPrefs.getString("tenant$id", "") ?: ""
+                if (tenant.isNotEmpty()) {
+                    edit.putString("room_tenant_$id", tenant)
+                    edit.putBoolean("resident_$tenant", true)
+                }
+            }
+            // Carry the V1.2 announcement into the V1.3 notice if one exists.
+            oldPrefs.getString("msg", null)?.let { edit.putString("message", it) }
+            edit.putBoolean("_migrated_v12", true)
+            edit.apply()
+        }
+        newPrefs
+    }
 
     var day by rememberSaveable { mutableIntStateOf(prefs.getInt("day", 1)) }
     var money by rememberSaveable { mutableIntStateOf(prefs.getInt("money", 1200)) }
@@ -420,6 +443,7 @@ fun SystemScreen(level: Int, day: Int, money: Int, reputation: Int, security: In
 @Composable fun EmptyBox(text: String) { Card(Modifier.fillMaxWidth().padding(16.dp), shape = RoundedCornerShape(18.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) { Text(text, Modifier.padding(18.dp), color = Color(0xFF75695F)) } }
 
 fun residentPool(): List<Resident> = listOf(
+    Resident("李铁柱", "维修工", 31, 90, 70, "维修社区设施"),
     Resident("林雪", "医生", 12, 88, 110, "治疗伤员"),
     Resident("王猛", "拾荒者", 72, 65, 90, "外出搜集效率提升"),
     Resident("赵小雨", "农夫", 20, 82, 75, "每天额外获得食物"),
