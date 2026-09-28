@@ -1,1 +1,9 @@
-<resources><style name="Theme.ApartmentLord" parent="android:style/Theme.Material.Light.NoActionBar"><item name="android:fontFamily">sans</item><item name="android:statusBarColor">#F4E8D0</item><item name="android:navigationBarColor">#201B18</item></style></resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ApartmentLord" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">#3D3935</item>
+        <item name="android:navigationBarColor">#F2E7D5</item>
+    </style>
+</resources>

@@ -12,8 +12,8 @@ android {
         applicationId = "com.yunwu.apartmentlord"
         minSdk = 24
         targetSdk = 35
-        versionCode = 12
-        versionName = "1.2"
+        versionCode = 13
+        versionName = "1.3"
     }
 
     signingConfigs {
@@ -30,9 +30,7 @@ android {
             isMinifyEnabled = false
             signingConfig = signingConfigs.getByName("release")
         }
-        debug {
-            signingConfig = signingConfigs.getByName("release")
-        }
+        debug { signingConfig = signingConfigs.getByName("release") }
     }
 
     compileOptions {
